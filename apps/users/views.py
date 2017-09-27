@@ -60,6 +60,9 @@ def add(request):
   return render(request, 'travels_add.html')
 
 def create(request):
+  if not request.POST['start'] or request.POST['end']:
+    messages.error(request, "Please fill out all fields")
+    return redirect('/travels/add')
   if len(Travelplan.objects.validation(request.POST)) > 0:
     messages.error(request, Travelplan.objects.validation(request.POST))
     return redirect('/travels/add') 
