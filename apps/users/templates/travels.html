@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Travel Dashboard</title>
+        <style>
+            table, tr, th, td{
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
+
+    <body>
+        <a href='/logout'>Logout</a>
+        <h1>Hello, {{request.session.first_name}}</h1>
+
+        <p>Your Trip Schedules</p>
+        <table>
+            <tr>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Plan</th>
+            </tr>
+            {% for plan in myplans %}
+                <tr>
+                    <td><a href='destination/{{plan.id}}'>{{plan.destination}}</a></td>
+                    <td>{{plan.start}}</td>
+                    <td>{{plan.end}}</td>
+                    <td>{{plan.plan}}</td>
+                </tr>
+            {% endfor %}
+            {% for plan in joinedplans.all %}
+                <tr>
+                    <td><a href='destination/{{plan.id}}'>{{plan.destination}}</a></td>
+                    <td>{{plan.start}}</td>
+                    <td>{{plan.end}}</td>
+                    <td>{{plan.plan}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <p>Other User's Travel Plans</p>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Do you want to join?</th>
+            </tr>
+            {% for otherplan in othersplans %}
+                {% if otherplan.user.id != request.session.user_id %}
+                    {% if otherplan not in joinedplans %}
+                    <tr>
+                        <td>{{otherplan.user.first_name}} {{otherplan.user.last_name}}</td>
+                        <td><a href='destination/{{otherplan.id}}'>{{otherplan.destination}}</a></td>
+                        <td>{{otherplan.start}}</td>
+                        <td>{{otherplan.end}}</td>
+                        <td><a href='travels/join/{{otherplan.id}}'>Join</a></td>
+                    </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </table>
+
+        <a href='travels/add'>Add Travel Plan</a>
+    </body>
+</html>

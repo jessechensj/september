@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Destination</title>
+    </head>
+
+    <body>
+        <a href='/travels'>Home</a>
+        <a href='/logout'>Logout</a>
+        <h1>{{destination.destination}}</h1>
+        <p>Planned By: {{destination.user.first_name}} {{destination.user.last_name}}</p>
+        <p>Description: {{destination.plan}}</p>
+        <p>Travel Date From: {{destination.start}}</p>
+        <p>Travel Date To: {{destination.end}}</p>
+
+        <h1>Other users joining the trip:</h1>
+        {% for user in others.all %}
+        <p>{{user.first_name}} {{user.last_name}}
+            {% if user.id == request.session.user_id %}
+                <a href='{{destination.id}}/leave/{{user.id}}'>Leave</a>
+            {% endif %}
+        </p>
+        {% endfor %}
+    </body>
+</html>

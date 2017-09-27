@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Login and registration</title>
+        <style>
+            #register, #login{
+                display: inline-block;
+                width: 10em;
+            }
+        </style>
+    </head>
+    <body>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h3>Register</h3>
+        <div id="register">
+            <form action='/register' method='post'>
+                {% csrf_token %}
+                First Name: <input type='text' name='first_name'>
+                Last Name: <input type='text' name='last_name'>
+                Email: <input type='text' name='email'>
+                Password: <input type='password' name='password'>
+                Confirm password: <input type='password' name='confirm_password'>
+                <input type='submit' value='create user'>
+            </form>
+        </div>
+        <hr>
+        <h3>Login</h3>
+        <div id='login'>
+            <form action='/login' method='post'>
+                {% csrf_token %}
+                Email: <input type='text' name='email'>
+                Password: <input type='password' name='password'>
+            <input type='submit' value='login'>
+        </div>
+    </body>
+</html>
